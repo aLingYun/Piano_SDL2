@@ -3,6 +3,8 @@
 #include <SDL2/SDL_mixer.h>
 #include "piano_key.h"
 
+#define MACHINETYPE     COMPUTER  //ADROID
+
 #define WHITEKEYNUM     22
 #define BLACKKEYNUM     15
 #define PIANOW          216
@@ -100,12 +102,23 @@ int main(int argc, char *argv[])
                 case SDL_QUIT:
                     quit=true;
                     break;
+#if MACHINETYPE == COMPUTER
                 case SDL_MOUSEBUTTONDOWN:
                     if(event.button.button == SDL_BUTTON_LEFT)
                     {
                         point.x = event.button.x;
                         point.y = event.button.y;
                     }
+                    break;
+#elif MACHINETYPE == ANDROID
+                case SDL_MOUSEBUTTONDOWN:
+                    if(event.button.button == SDL_FINGERDOWN)
+                    {
+                        point.x = event.button.x;
+                        point.y = event.button.y;
+                    }
+                    break;
+#endif
                 default:
                     break;
             }
