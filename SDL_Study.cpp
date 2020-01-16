@@ -1,15 +1,16 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_image.h>
 #include "piano_key.h"
 
 #define MACHINETYPE     COMPUTER  //ADROID
 
-#define WHITEKEYNUM     22
-#define BLACKKEYNUM     15
+#define WHITEKEYNUM     18
+#define BLACKKEYNUM     13
 #define PIANOW          216
 #define PIANOH          468
-#define DISPLAYH        50
+#define DISPLAYH        PIANOW / 2
 #define WHITEKEYW       (PIANOW - DISPLAYH)
 #define WHITEKEYH       (PIANOH / WHITEKEYNUM)
 #define BLACKKEYW       (WHITEKEYW*2/3)
@@ -27,9 +28,7 @@ char* blackWav[BLACKKEYNUM] = { "./res/a#.wav",
                                 "./res/a4.wav",
                                 "./res/b.wav",
                                 "./res/b1.wav",
-                                "./res/B2.wav",
-                                "./res/b3.wav",
-                                "./res/b4.wav"
+                                "./res/B2.wav"
                                 };
 char* whiteWav[WHITEKEYNUM] = { "./res/c#.wav",
                                 "./res/c.wav",
@@ -48,11 +47,7 @@ char* whiteWav[WHITEKEYNUM] = { "./res/c#.wav",
                                 "./res/d1.wav",
                                 "./res/d2#.wav",
                                 "./res/d2.wav",
-                                "./res/d3#.wav",
-                                "./res/d3.wav",
-                                "./res/d4#.wav",
-                                "./res/d4.wav",
-                                "./res/e.wav"
+                                "./res/d3#.wav"
                                 };
 
 bool boPointInRect(SDL_Point point, SDL_Rect rect)
@@ -66,8 +61,11 @@ int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
+    IMG_Init(IMG_INIT_JPG);
     SDL_Window *window=SDL_CreateWindow("demo",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,PIANOW,PIANOH,SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+    SDL_Surface *background=IMG_Load("./res/background.jpg");
+    SDL_Texture *text=SDL_CreateTextureFromSurface(renderer,background);
     bool quit=false;
     SDL_Event event;
     SDL_Point point;
@@ -75,16 +73,17 @@ int main(int argc, char *argv[])
     PIANOKEY keyWhite[WHITEKEYNUM];
     PIANOKEY keyBlack[BLACKKEYNUM];
 
-    //scratch = Mix_LoadMUS(whiteWav[1]);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer,text,NULL,NULL);
 
     for(int i=0; i<WHITEKEYNUM; i++)
     {
-        keyWhite[i].setKey({0,i*WHITEKEYH,WHITEKEYW,WHITEKEYH});
+        keyWhite[i].setKey({0,i*WHITEKEYH,WHITEKEYW,WHITEKEYH-1});
         keyWhite[i].showKey(renderer,white);
     }
     for(int i=0,j=0; (i<WHITEKEYNUM) && (j<BLACKKEYNUM); i++)
     {
-        if((i==2)||(i==6)||(i==9)||(i==13)||(i==16)||(i==20))
+        if((i==3)||(i==6)||(i==10)||(i==13))
         {
             continue;
         }
@@ -95,7 +94,8 @@ int main(int argc, char *argv[])
             j++;
         }
     }
-
+   
+    SDL_RenderPresent(renderer);
     while(!quit){
         while(SDL_PollEvent(&event)){
             switch(event.type){
@@ -156,7 +156,6 @@ int main(int argc, char *argv[])
             }
         }
         point = {PIANOW,PIANOH};
-        SDL_RenderPresent(renderer);
         SDL_Delay(1000/60);
     }
     Mix_FreeMusic(scratch);
