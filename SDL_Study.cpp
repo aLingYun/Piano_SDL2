@@ -8,13 +8,16 @@
 
 #define WHITEKEYNUM     18
 #define BLACKKEYNUM     13
-#define PIANOW          216
-#define PIANOH          468
+//#define PIANOW          1080
+//#define PIANOH          2240
 #define DISPLAYH        PIANOW / 2
 #define WHITEKEYW       (PIANOW - DISPLAYH)
 #define WHITEKEYH       (PIANOH / WHITEKEYNUM)
 #define BLACKKEYW       (WHITEKEYW*2/3)
 #define BLACKKEYH       (WHITEKEYH*2/3)
+
+int PIANOW=0;
+int PIANOH=0;
 
 char* blackWav[BLACKKEYNUM] = { "./res/a#.wav",
                                 "./res/a.wav",
@@ -62,7 +65,7 @@ int main(int argc, char *argv[])
     SDL_Init(SDL_INIT_EVERYTHING);
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
     IMG_Init(IMG_INIT_JPG);
-    SDL_Window *window=SDL_CreateWindow("demo",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,PIANOW,PIANOH,SDL_WINDOW_SHOWN);
+    SDL_Window *window=SDL_CreateWindow("demo",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
     SDL_Surface *background=IMG_Load("./res/background.jpg");
     SDL_Texture *text=SDL_CreateTextureFromSurface(renderer,background);
@@ -75,6 +78,8 @@ int main(int argc, char *argv[])
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer,text,NULL,NULL);
+    
+    SDL_GetWindowSize(window,&PIANOW,&PIANOH);
 
     for(int i=0; i<WHITEKEYNUM; i++)
     {
