@@ -19,38 +19,38 @@
 int PIANOW=0;
 int PIANOH=0;
 
-char* blackWav[BLACKKEYNUM] = { "./res/a#.wav",
-                                "./res/a.wav",
-                                "./res/a1#.wav",
-                                "./res/a1.wav",
-                                "./res/A2#.wav",
-                                "./res/A2.wav",
-                                "./res/a3#.wav",
-                                "./res/a3.wav",
-                                "./res/a4#.wav",
-                                "./res/a4.wav",
-                                "./res/b.wav",
-                                "./res/b1.wav",
-                                "./res/B2.wav"
-                                };
-char* whiteWav[WHITEKEYNUM] = { "./res/c#.wav",
-                                "./res/c.wav",
-                                "./res/c1#.wav",
-                                "./res/c1.wav",
-                                "./res/c2#.wav",
-                                "./res/c2.wav",
-                                "./res/c3#.wav",
-                                "./res/c3.wav",
-                                "./res/c4#.wav",
-                                "./res/c4.wav",
-                                "./res/c5.wav",
+char* blackWav[BLACKKEYNUM] = { "./res/f#.wav",
+                                "./res/g#.wav",
+                                "./res/a#.wav",
+                                "./res/c#.wav",
                                 "./res/d#.wav",
-                                "./res/d.wav",
-                                "./res/d1#.wav",
-                                "./res/d1.wav",
+                                "./res/f1#.wav",
+                                "./res/g1#.wav",
+                                "./res/a1#.wav",
+                                "./res/c2#.wav",
                                 "./res/d2#.wav",
+                                "./res/f2#.wav",
+                                "./res/g2#.wav",
+                                "./res/a2#.wav"
+                                };
+char* whiteWav[WHITEKEYNUM] = { "./res/f.wav",
+                                "./res/g.wav",
+                                "./res/a.wav",
+                                "./res/b.wav",
+                                "./res/c1.wav",
+                                "./res/d1.wav",
+                                "./res/e1.wav",
+                                "./res/f1.wav",
+                                "./res/g1.wav",
+                                "./res/a1.wav",
+                                "./res/b1.wav",
+                                "./res/c2.wav",
                                 "./res/d2.wav",
-                                "./res/d3#.wav"
+                                "./res/e2.wav",
+                                "./res/f2.wav",
+                                "./res/g2.wav",
+                                "./res/a2.wav",
+                                "./res/b2.wav"
                                 };
 
 bool boPointInRect(SDL_Point point, SDL_Rect rect)
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     SDL_Init(SDL_INIT_EVERYTHING);
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096);
     IMG_Init(IMG_INIT_JPG);
-    SDL_Window *window=SDL_CreateWindow("demo",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,0,0,SDL_WINDOW_SHOWN);
+    SDL_Window *window=SDL_CreateWindow("demo",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,216,468,SDL_WINDOW_SHOWN);
     SDL_Renderer *renderer=SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
     SDL_Surface *background=IMG_Load("./res/background.jpg");
     SDL_Texture *text=SDL_CreateTextureFromSurface(renderer,background);
